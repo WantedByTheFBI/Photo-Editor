@@ -1,21 +1,28 @@
-import PIL.ImageColor
 from PIL import Image
-import os, sys
-im = Image.open("GraphicDesignIsMyPassion.jpg")
-im.show("GraphicDesignIsMyPassion.jpg")
+imagetheywant = input("Which image do you want to edit")
+
+im = Image.open(imagetheywant)
+im.show(imagetheywant)
 print(im.format, im.size, im.mode)
-def roll(im, delta):
-    """Roll an image sideways."""
-    xsize, ysize = im.size
+imagedimensions = list(im.size)
+imagewidth = imagedimensions[0]
+imageheight = imagedimensions[1]
+def invertcolour(imagewidth, imageheight): #inverts the colour of the image
+    for x in range(0,imagewidth):
+        for y in range(0,imageheight):
+            xy = (x, y)
+            t = im.getpixel(xy)
 
-    delta = delta % xsize
-    if delta == 0:
-        return im
+            t = (255-t[0], 255-t[1], 255-t[2])
+            im.putpixel(xy, t)
+invertcolour(imagewidth, imageheight)
+im.show(imagetheywant)
+def watermark(): #forces my watermark onto it
+    w = max(im.size[0], watermark.size[0])
+    h = max(im.size[1], watermark.size[1])
+    im = Image.new("RGBA", (w, h))
 
-    part1 = im.crop((0, 0, delta, ysize))
-    part2 = im.crop((delta, 0, xsize, ysize))
-    im.paste(part1, (xsize - delta, 0, xsize, ysize))
-    im.paste(part2, (0, 0, xsize - delta, ysize))
+    im.paste(im)
+    im.paste(watermark, (im.size[0], 0))
 
     return im
-
