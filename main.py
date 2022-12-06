@@ -1,7 +1,17 @@
 
 from PIL import Image
-imagetheywant = input("Which image do you want to edit")
+imagetheywant = input("Which image do you want to edit?: ")
 im = Image.open(imagetheywant)
+if im.format != "JPG":
+    YesToFileConvert = input("Would you like to convert the file to jpg?: ")
+    print(im.mode)
+    if YesToFileConvert.lower == "yes":
+        im = im.convert('RGB')
+        imagetheywant = imagetheywant[0:len(imagetheywant)-3] + "jpg"
+        im.save(imagetheywant, "JPEG")
+        print("h")
+        print(im.format, im.size, im.mode)
+        print("this happend 2")
 #def merge(im1, im2):
     #w = max(im1.size[0], im2.size[0])
     #h = max(im1.size[1], im2.size[1])
@@ -53,7 +63,6 @@ def greenredswap(imagewidth, imageheight):
             t = im.getpixel(xy)
             t = (t[1], t[0], t[2])
             im.putpixel(xy, t)
-print(im.format, im.size, im.mode)
 imagedimensions = list(im.size)
 imagewidth = imagedimensions[0]
 imageheight = imagedimensions[1]
