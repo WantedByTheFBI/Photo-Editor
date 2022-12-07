@@ -5,13 +5,14 @@ im = Image.open(imagetheywant)
 if im.format != "JPG":
     YesToFileConvert = input("Would you like to convert the file to jpg?: ")
     print(im.mode)
+    imagetheywant = imagetheywant[0:len(imagetheywant) - 3] + "jpg"
+    im.save(imagetheywant, "JPEG")
     if YesToFileConvert.lower == "yes":
         im = im.convert('RGB')
         imagetheywant = imagetheywant[0:len(imagetheywant)-3] + "jpg"
         im.save(imagetheywant, "JPEG")
-        print("h")
         print(im.format, im.size, im.mode)
-        print("this happend 2")
+
 #def merge(im1, im2):
     #w = max(im1.size[0], im2.size[0])
     #h = max(im1.size[1], im2.size[1])
@@ -66,12 +67,13 @@ def greenredswap(imagewidth, imageheight):
 imagedimensions = list(im.size)
 imagewidth = imagedimensions[0]
 imageheight = imagedimensions[1]
+
 invertcolour(imagewidth, imageheight)
-blueredswap(imagewidth, imageheight)
-bluegreenswap(imagewidth, imageheight)
-greenredswap(imagewidth, imageheight)
-greenblueredshift(imagewidth, imageheight)
-blueredgreenshift(imagewidth, imageheight)
+#blueredswap(imagewidth, imageheight)
+#bluegreenswap(imagewidth, imageheight)
+#greenredswap(imagewidth, imageheight)
+#greenblueredshift(imagewidth, imageheight)
+#blueredgreenshift(imagewidth, imageheight)
 im.show()
 
 #watermark = Image.open("watermark.png")
