@@ -21,59 +21,66 @@ if im.format != "JPG":
     #im.paste(im1)
     #im.paste(im2, 240)
     #return im
-def invertcolour(imagewidth, imageheight): #inverts the colour of the image
-    for x in range(0,imagewidth):
-        for y in range(0,imageheight):
+def invertcolour(): #inverts the colour of the image
+    for x in range(0, im.size[0]):
+        for y in range(0, im.size[1]):
             xy = (x, y)
             t = im.getpixel(xy)
             t = (255-t[0], 255-t[1], 255-t[2])
             im.putpixel(xy, t)
-def blueredswap(imagewidth,imageheight):
-    for x in range(0,imagewidth):
-        for y in range(0,imageheight):
+def blueredswap():
+    for x in range(0, im.size[0]):
+        for y in range(0, im.size[1]):
             xy = (x, y)
             t = im.getpixel(xy)
             t = (t[2], t[1], t[0])
             im.putpixel(xy, t)
-def bluegreenswap(imagewidth, imageheight):
-    for x in range(0, imagewidth):
-        for y in range(0, imageheight):
+def bluegreenswap():
+    for x in range(0, im.size[0]):
+        for y in range(0, im.size[1]):
             xy = (x, y)
             t = im.getpixel(xy)
             t = (t[0], t[2], t[1])
             im.putpixel(xy, t)
-def greenblueredshift(imagewidth, imageheight):
-    for x in range(0,imagewidth):
-        for y in range(0,imageheight):
+def greenblueredshift():
+    for x in range(0, im.size[0]):
+        for y in range(0, im.size[1]):
             xy = (x, y)
             t = im.getpixel(xy)
             t = (t[1], t[2], t[0])
             im.putpixel(xy, t)
 
-def blueredgreenshift(imagewidth, imageheight):
-    for x in range(0,imagewidth):
-        for y in range(0,imageheight):
+def blueredgreenshift():
+    for x in range(0, im.size[0]):
+        for y in range(0, im.size[1]):
             xy = (x, y)
             t = im.getpixel(xy)
             t = (t[2], t[0], t[1])
             im.putpixel(xy, t)
-def greenredswap(imagewidth, imageheight):
-    for x in range(0,imagewidth):
-        for y in range(0,imageheight):
+def greenredswap():
+    for x in range(0,im.size[0]):
+        for y in range(0,im.size[1]):
             xy = (x, y)
             t = im.getpixel(xy)
             t = (t[1], t[0], t[2])
             im.putpixel(xy, t)
-imagedimensions = list(im.size)
-imagewidth = imagedimensions[0]
-imageheight = imagedimensions[1]
-
-invertcolour(imagewidth, imageheight)
-#blueredswap(imagewidth, imageheight)
-#bluegreenswap(imagewidth, imageheight)
-#greenredswap(imagewidth, imageheight)
-#greenblueredshift(imagewidth, imageheight)
-#blueredgreenshift(imagewidth, imageheight)
+while True:
+    colourstochange = input("would you like to invert the colours[I], swap blue and red [br], swap blue and green [bg], swap red and green[rg], or shift the rbg values [gbr] [brg]: ")
+    if colourstochange.lower == "i":
+        invertcolour()
+    if colourstochange.lower == "br":
+        blueredswap()
+    if colourstochange.lower == "bg":
+        bluegreenswap()
+    if colourstochange.lower == "gr":
+        greenredswap()
+    if colourstochange.lower == "gbr":
+        greenblueredshift()
+    if colourstochange.lower == "brg":
+        blueredgreenshift()
+    stopper = input("Would you like to keep changing the colours or stop?: ")
+    if stopper == "stop":
+        break
 im.show()
 
 #watermark = Image.open("watermark.png")
