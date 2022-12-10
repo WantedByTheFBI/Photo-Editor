@@ -2,10 +2,14 @@
 from PIL import Image
 imagetheywant = input("Which image do you want to edit?: ")
 im = Image.open(imagetheywant)
+watermark = Image.open("watermark.png")
+w = int(im.size[0]/2)
+h = int(im.size[1]/2)
+wh = (w, h)
+watermark.resize(wh)
+watermark.show()
 def merge():
-    w = max(im.size[0], watermark.size[0])
-    h = max(im.size[1], watermark.size[1])
-    im2 = Image.new("RGBA", (w, h))
+    im2 = Image.new("RGBA", (im.size[0], im.size[1]))
 
     im2.paste(im)
     im2.paste(watermark)
@@ -77,7 +81,7 @@ while True:
     if stopper == "stop":
         break
 
-watermark = Image.open("watermark.png")
+
 im = merge()
 im.show()
 if im.format != "JPG":
