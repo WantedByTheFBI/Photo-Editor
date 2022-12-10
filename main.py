@@ -2,18 +2,15 @@
 from PIL import Image
 imagetheywant = input("Which image do you want to edit?: ")
 im = Image.open(imagetheywant)
-watermark = Image.open("watermark.png")
-w = int(im.size[0]/2)
-h = int(im.size[1]/2)
-wh = (w, h)
-watermark.resize(wh)
-watermark.show()
-def merge():
-    im2 = Image.new("RGBA", (im.size[0], im.size[1]))
+originalformat = im.format
+#watermark = Image.open("watermark.png")
 
-    im2.paste(im)
-    im2.paste(watermark)
-    return im2
+#def merge():
+    #im2 = Image.new("RGBA", (im.size[0], im.size[1]))
+
+    #im2.paste(im)
+    #im2.paste(watermark)
+    #return im2
 def invertcolour(): #inverts the colour of the image
     for x in range(0, im.size[0]):
         for y in range(0, im.size[1]):
@@ -63,34 +60,39 @@ def greenredswap():
             t = (t[1], t[0], t[2])
             im.putpixel(xy, t)
     im.show()
+def resizeimage():
+    print("Your image is currently this large (width, height): " + str(im.size))
+    resizingwidth = int(input("How wide do you want it to be resized?: "))
+    resizingheight = int(input("How tall do you want it to be resized?: "))
+    resizedimensions = (resizingwidth, resizingheight)
+    return im.resize(resizedimensions)
 while True:
-    colourstochange = input("would you like to invert the colours[i], swap blue and red [br], swap blue and green [bg], swap red and green[rg], or shift the rbg values [gbr] [brg]: ")
-    if colourstochange == "i":
-        invertcolour()
-    if colourstochange == "br":
-        blueredswap()
-    if colourstochange == "bg":
-        bluegreenswap()
-    if colourstochange == "gr":
-        greenredswap()
-    if colourstochange == "gbr":
-        greenblueredshift()
-    if colourstochange == "brg":
-        blueredgreenshift()
-    stopper = input("Would you like to keep changing the colours or stop?: ")
-    if stopper == "stop":
-        break
-
-
-im = merge()
+    changephoto = input("Would you like to alter colours[C] or resize the image[R]: ")
+    if changephoto.lower() == "c":
+        colourstochange = input("would you like to invert the colours[i], swap blue and red [br], swap blue and green [bg], swap red and green[rg], or shift the rbg values [gbr] [brg]: ")
+        if colourstochange == "i": invertcolour()
+        if colourstochange == "br": blueredswap()
+        if colourstochange == "bg": bluegreenswap()
+        if colourstochange == "gr": greenredswap()
+        if colourstochange == "gbr": greenblueredshift()
+        if colourstochange == "brg": blueredgreenshift()
+        stopper = input("Would you like to keep changing the colours or stop?: ")
+        if stopper == "stop": break
+    elif changephoto.lower() == "r":
+        im = resizeimage()
+#w = int(im.size[0]/2)
+#h = int(im.size[0]/8)
+#wh = (w, h)
+#watermark = watermark.resize(wh)
+#im = merge()
 im.show()
-if im.format != "JPG":
-    YesToFileConvert = input("Would you like to convert the file to jpg?: ")
-    print(im.mode)
-    imagetheywant = imagetheywant[0:len(imagetheywant) - 3] + "jpg"
-    im.save(imagetheywant, "JPEG")
-    if YesToFileConvert.lower == "yes":
+saveimage = input("Would you like to save the image?: ")
+if saveimage.lower() == "yes":
+    im.save(imagetheywant, originalformat)
+newformat = input("Would you like to change the image format(put your desired format type here, if you don't want to change the format, type in \"NO\")?: ")
+if newformat == "JPEG" or newformat == "JPG":
+    if im.format == "RGBA":
         im = im.convert('RGB')
-        imagetheywant = imagetheywant[0:len(imagetheywant)-3] + "jpg"
-        im.save(imagetheywant, "JPEG")
-        print(im.format, im.size, im.mode)
+    im.save(imagetheywant, "JPEG")
+elif newformat.lower() != "no":
+    im.save(imagetheywant, newformat)
