@@ -60,6 +60,7 @@ def greenredswap():
             t = (t[1], t[0], t[2])
             im.putpixel(xy, t)
     im.show()
+
 def resizeimage():
     print("Your image is currently this large (width, height): " + str(im.size))
     resizingwidth = int(input("How wide do you want it to be resized?: "))
@@ -67,9 +68,9 @@ def resizeimage():
     resizedimensions = (resizingwidth, resizingheight)
     return im.resize(resizedimensions)
 while True:
-    changephoto = input("Would you like to alter colours[C] or resize the image[R]: ")
+    changephoto = input("Would you like to alter colours[C] or resize the image[RE] or rotate the image [RO]: ")
     if changephoto.lower() == "c":
-        colourstochange = input("would you like to invert the colours[i], swap blue and red [br], swap blue and green [bg], swap red and green[rg], or shift the rbg values [gbr] [brg]: ")
+        colourstochange = input("Would you like to invert the colours[i], swap blue and red [br], swap blue and green [bg], swap red and green[rg], or shift the rbg values [gbr] [brg]: ")
         if colourstochange == "i": invertcolour()
         if colourstochange == "br": blueredswap()
         if colourstochange == "bg": bluegreenswap()
@@ -78,8 +79,15 @@ while True:
         if colourstochange == "brg": blueredgreenshift()
         stopper = input("Would you like to keep changing the colours or stop?: ")
         if stopper == "stop": break
-    elif changephoto.lower() == "r":
+    elif changephoto.lower() == "re":
         im = resizeimage()
+    elif changephoto.lower() == "ro":
+        rotateangle = int(input("How many degrees would you like to rotate the image?: "))
+        keepimageexpanded = input("Would you like the image to keep it's original dimensions(type \"False\") or use the new dimensions(type \"True\")?")
+        if keepimageexpanded.lower() == "true": keepimageexpanded = True
+        else: keepimageexpanded = False
+        im = im.rotate(rotateangle, keepimageexpanded)
+
 #w = int(im.size[0]/2)
 #h = int(im.size[0]/8)
 #wh = (w, h)
