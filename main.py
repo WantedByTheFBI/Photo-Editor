@@ -1,16 +1,7 @@
-
 from PIL import Image
 imagefiletheywant = input("Which image do you want to edit?: ")
 im = Image.open(imagefiletheywant)
 originalformat = im.format
-#watermark = Image.open("watermark.png")
-
-#def merge():
-    #im2 = Image.new("RGBA", (im.size[0], im.size[1]))
-
-    #im2.paste(im)
-    #im2.paste(watermark)
-    #return im2
 def invertcolour(): #inverts the colour of the image
     for x in range(0, im.size[0]):
         for y in range(0, im.size[1]):
@@ -77,32 +68,23 @@ while True:
         if colourstochange == "gr": greenredswap()
         if colourstochange == "gbr": greenblueredshift()
         if colourstochange == "brg": blueredgreenshift()
-        stopper = input("Would you like to keep changing the colours or stop?: ")
-        if stopper == "stop": break
     elif changephoto.lower() == "re":
         im = resizeimage()
     elif changephoto.lower() == "ro":
         rotateangle = int(input("How many degrees would you like to rotate the image?: "))
-        keepimageexpanded = input("Would you like the image to keep it's original dimensions(type \"False\") or use the new dimensions(type \"True\")?")
-        if keepimageexpanded.lower() == "true": keepimageexpanded = True
-        else: keepimageexpanded = False
-        im = im.rotate(rotateangle, keepimageexpanded)
-
-#w = int(im.size[0]/2)
-#h = int(im.size[0]/8)
-#wh = (w, h)
-#watermark = watermark.resize(wh)
-#im = merge()
+        keepimageexpanded = input("Would you like the image to keep it's original dimensions(type \"False\") or use the new dimensions(type \"True\")? ")
+        if keepimageexpanded.lower() == "true": im = im.rotate(rotateangle,0, True)
+        else: keepimageexpanded = im = im.rotate(rotateangle,0, False)
+    if (input("would you like to keep editing the photo? \"yes\" or \"no\" ")).lower() == "no": break
 im.show()
 print("The following questions are all yes or no questions, please answer them with a simple \"yes\" or \"no\". ")
 saveimage = input("Would you like to save the image?: ")
 if saveimage.lower() == "yes":
     override = input("Would you like to save the image to a different file name? (so it doesn't overwrite the previous image): ")
     if override.lower() == "yes":
-        imagefiletheywant = input("Please input the new file name here (do not include a formating option): ")
+        imagefiletheywant = (input("Please input the new file name here (do not include a formating option): ")) + f".{originalformat}"
     newformat = input("Would you like to change the image format(put your desired format type here, if you don't want to change the format, type in \"NO\")?: ")
     if newformat.lower() == "no": im.save(imagefiletheywant)
-    else: imagetheywantfilename = ((imagefiletheywant[::-1])[imagefiletheywant[::-1].index(".") + 1:len(imagefiletheywant):])[::-1] + newformat
-    im.save(imagetheywantfilename)
+    else: im.save((((imagefiletheywant[::-1])[imagefiletheywant[::-1].index(".") + 1:len(imagefiletheywant):])[::-1])+newformat)
 
 
