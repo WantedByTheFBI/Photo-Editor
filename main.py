@@ -1,7 +1,7 @@
 
 from PIL import Image
-imagetheywant = input("Which image do you want to edit?: ")
-im = Image.open(imagetheywant)
+imagefiletheywant = input("Which image do you want to edit?: ")
+im = Image.open(imagefiletheywant)
 originalformat = im.format
 #watermark = Image.open("watermark.png")
 
@@ -94,13 +94,15 @@ while True:
 #watermark = watermark.resize(wh)
 #im = merge()
 im.show()
+print("The following questions are all yes or no questions, please answer them with a simple \"yes\" or \"no\". ")
 saveimage = input("Would you like to save the image?: ")
 if saveimage.lower() == "yes":
-    im.save(imagetheywant, originalformat)
-newformat = input("Would you like to change the image format(put your desired format type here, if you don't want to change the format, type in \"NO\")?: ")
-if newformat == "JPEG" or newformat == "JPG":
-    if im.format == "RGBA":
-        im = im.convert('RGB')
-    im.save(imagetheywant, "JPEG")
-elif newformat.lower() != "no":
-    im.save(imagetheywant, newformat)
+    override = input("Would you like to save the image to a different file name? (so it doesn't overwrite the previous image): ")
+    if override.lower() == "yes":
+        imagefiletheywant = input("Please input the new file name here (do not include a formating option): ")
+    newformat = input("Would you like to change the image format(put your desired format type here, if you don't want to change the format, type in \"NO\")?: ")
+    if newformat.lower() == "no": im.save(imagefiletheywant)
+    else: imagetheywantfilename = ((imagefiletheywant[::-1])[imagefiletheywant[::-1].index(".") + 1:len(imagefiletheywant):])[::-1] + newformat
+    im.save(imagetheywantfilename)
+
+
